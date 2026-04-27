@@ -1,0 +1,19 @@
+# Python cache and virtual envs
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+
+# Data artifacts
+data/
+*.csv
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE and OS
+.vscode/.history/
+.DS_Store
+Thumbs.db
