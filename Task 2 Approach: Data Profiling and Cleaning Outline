@@ -1,0 +1,74 @@
+Task 2 Approach: Data Profiling and Cleaning Outline
+Overview
+This task defines a structured and repeatable approach for performing data profiling, cleaning, and exploratory data analysis (EDA) on a per-country basis. The objective is to ensure consistency across datasets while maintaining high data quality and producing interpretable climate insights.
+Each country will be processed independently using a standardized workflow implemented in a dedicated branch and notebook.
+Branching and Notebook Structure
+For each country, a separate development branch will be created following the naming convention eda-<country>, for example eda-ethiopia. This allows isolated development and clear version tracking per dataset.
+Within each branch, a dedicated Jupyter notebook will be created using the format <country>_eda.ipynb. This notebook will contain the full pipeline, including data loading, cleaning, analysis, and visualization.
+
+Data Loading and Temporal Feature Engineering
+The dataset for each country will be loaded using pandas from a CSV file in the format:
+pd.read_csv("<country>.csv")
+After loading, a Country column will be added to explicitly label the dataset.
+To support temporal analysis, a proper datetime column will be constructed using the combination of YEAR and DOY (Day of Year). This will be implemented using:
+pd.to_datetime(df["YEAR"] * 1000 + df["DOY"], format="%Y%j")
+From this datetime column, a Month feature will be extracted to enable seasonal and monthly trend analysis, which is essential for climate pattern interpretation.
+
+Data Quality Assessment (Pre-Cleaning Stage)
+Before any analysis, a systematic data quality check will be performed to assess completeness, consistency, and reliability.
+All placeholder missing values encoded as -999 will be replaced with NaN to standardize missing data representation across the dataset.
+Duplicate records will be identified using:
+df.duplicated().sum()
+If duplicates are found, they will be removed, and the count of removed records will be documented for transparency.
+Basic statistical profiling will be conducted using:
+df.describe()
+This will provide initial insight into distributions, central tendencies, and potential anomalies in numerical variables.
+Missing data will be further analyzed using:
+df.isna().sum()
+In addition, missing value percentages will be calculated per column. Columns with more than 5% missing values will be flagged, and their potential impact on analysis reliability will be documented in markdown form.
+
+Outlier Detection and Treatment Strategy
+Outlier detection will be performed using Z-score analysis on key meteorological variables, including:
+T2M
+T2M_MAX
+T2M_MIN
+PRECTOTCORR
+RH2M
+WS2M
+WS2M_MAX
+Observations with an absolute Z-score greater than 3 will be flagged as potential outliers, and the total count will be reported for each variable.
+A clear and documented treatment strategy will then be applied. Depending on variable behavior and domain relevance, outliers may be retained, capped, or removed. The justification for each decision will be explicitly documented to ensure methodological transparency.
+
+Handling Missing Values After Cleaning
+After initial cleaning steps, remaining missing values will be handled using a structured approach.
+Rows containing more than 30% missing values will be removed to preserve data integrity. For time-series-related weather variables, forward-fill imputation will be applied where appropriate to maintain temporal continuity.
+All cleaning decisions, including thresholds and assumptions, will be documented within markdown cells inside the notebook to ensure reproducibility.
+
+Cleaned Data Export
+Once cleaning is completed, the processed dataset will be exported in CSV format using the naming convention:
+data/<country>_clean.csv
+The data/ directory and all CSV outputs remain excluded from version control in accordance with .gitignore rules to prevent unnecessary repository bloat.
+
+Exploratory Data Analysis (EDA) Deliverables
+Time Series Analysis
+Monthly trends will be analyzed using visualizations. A line chart will be generated for monthly mean T2M covering the period 2015–2026, with annotations highlighting the warmest and coolest months.
+Additionally, total monthly precipitation (PRECTOTCORR) will be visualized using a bar chart. Peak rainfall periods will be annotated and interpreted in the context of seasonal climate patterns.
+Each visualization will be accompanied by written interpretation describing observed trends, anomalies, and climatic implications.
+
+Correlation and Relationship Analysis
+A correlation heatmap will be generated across all numerical variables to identify interdependencies.
+Scatter plot analysis will include:
+T2M vs RH2M (temperature vs humidity relationship)
+T2M_RANGE vs WS2M (temperature variability vs wind speed)
+The top three strongest correlations will be identified and interpreted in terms of meteorological significance and potential climate interactions.
+
+Distribution Analysis
+The distribution of precipitation (PRECTOTCORR) will be visualized using histograms. If the distribution is highly skewed, a log-scale transformation will be applied to improve interpretability.
+A bubble chart will also be generated, plotting T2M against RH2M, with bubble size representing precipitation levels. This will help visualize multi-variable climate interactions in a single view.
+Each distribution output will include interpretation of shape, skewness, and relevance to climate behavior.
+References and Reproducibility
+Each notebook will include a dedicated references section documenting any analytical methods, statistical techniques, or external resources used during the analysis.
+All outputs will be paired with concise written interpretations to ensure that visual results are not presented in isolation but are supported by analytical reasoning.
+Summary
+This approach ensures a consistent, reproducible, and well-documented pipeline for data profiling, cleaning, and exploratory analysis across all country datasets. It emphasizes methodological transparency, structured cleaning decisions, and interpretable climate insights.
+
