@@ -1,0 +1,30 @@
+Task 1 Summary: Git & Environment Setup
+Overview
+The initial repository setup has been completed on the setup-task branch in accordance with the Week 0 project requirements. The objective of this stage was to establish a clean, maintainable, and reproducible development environment, along with a basic Continuous Integration (CI) pipeline to support future development workflows.
+Repository Structure
+A structured project layout has been implemented to ensure clear separation of concerns and scalability as the project grows. The repository is organized into the following main directories:
+.vscode/
+.github/workflows/
+src/
+notebooks/
+scripts/
+tests/
+The src/ directory is intended for core application code, while notebooks/ is reserved for exploratory data analysis and experimentation. The scripts/ folder supports utility and automation scripts, and the tests/ directory is designated for unit and integration tests to ensure code reliability. The .github/workflows/ directory contains CI configuration, and .vscode/ provides optional editor-specific settings to standardize the development environment across contributors.
+
+Environment and Dependency Management
+The project includes key configuration files required to ensure reproducibility and consistent setup across different environments.
+The .gitignore file has been carefully configured to prevent unnecessary or sensitive files from being tracked in version control. This includes excluding data files such as data/ directories and .csv files, as well as Jupyter notebook checkpoint files (.ipynb_checkpoints/). Additionally, it ignores Python-specific artifacts such as virtual environments and compiled cache files (__pycache__, .pyc).
+The requirements.txt file defines all external dependencies required to run the project. This ensures that any developer or reviewer can recreate the same environment by installing the listed packages.
+The README.MD file provides documentation for setting up and running the project locally. It includes step-by-step instructions for creating a virtual environment, installing dependencies, and executing the project components in a reproducible manner.
+
+Continuous Integration (CI) Workflow
+A Continuous Integration pipeline has been implemented using GitHub Actions to automate basic validation steps and ensure code integrity on every update.
+The workflow is defined in the following location:
+.github/workflows/ci.yml
+The CI pipeline is configured to trigger on two main events: when changes are pushed to the repository and when a pull request is created targeting the main branch. This ensures that all changes undergo automated checks before being merged.
+The workflow performs a sequence of validation steps. It begins by setting up the Python environment and verifying the installed Python version to ensure consistency across environments. After that, it installs all required dependencies using the requirements.txt file. This setup ensures that the project can be executed in a clean environment without manual intervention.
+
+Development Workflow and Commit Strategy
+Development has been carried out on a dedicated branch named setup-task. This approach follows best practices for isolated feature development and avoids direct changes to the main branch.
+Although the structure and configuration are in place, the requirement for at least three conventional commits has not yet been fully completed. These commits are expected to follow a standardized format to ensure clarity and traceability of changes. The final integration step, which involves creating and merging a pull request into the main branch, is also pending.
+
