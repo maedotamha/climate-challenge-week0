@@ -8,6 +8,7 @@ env/
 
 # Data artifacts
 data/
+data/**/*.csv
 *.csv
 
 # Jupyter
